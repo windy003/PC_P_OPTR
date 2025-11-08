@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(cmd /c dir \"D:\\files\\using\\PC_P_OPTR\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -2,10 +2,12 @@ import os
 import re
 import shutil
 from pathlib import Path
+from datetime import datetime, timedelta
 
 def organize_screenshots(source_dir):
     """
-    扫描指定目录下的PNG文件，按日期分类到对应文件夹
+    扫描指定目录下的PNG文件，按日期+3天分类到对应文件夹
+    例如：文件名包含2025-11-08，会移动到2025-11-11文件夹
 
     Args:
         source_dir: 源目录路径
@@ -33,7 +35,18 @@ def organize_screenshots(source_dir):
         match = date_pattern.search(filename)
 
         if match:
-            date_str = match.group(1)  # 提取日期，例如 "2025-11-08"
+            original_date_str = match.group(1)  # 提取日期，例如 "2025-11-08"
+
+            # 将日期字符串转换为datetime对象
+            original_date = datetime.strptime(original_date_str, '%Y-%m-%d')
+
+            # 计算3天后的日期
+            target_date = original_date + timedelta(days=3)
+
+            # 转换回字符串格式
+            date_str = target_date.strftime('%Y-%m-%d')
+
+            print(f"文件日期: {original_date_str} -> 目标文件夹: {date_str}")
 
             # 创建日期文件夹路径
             date_folder = source_path / date_str
